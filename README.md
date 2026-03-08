@@ -13,6 +13,10 @@ Given a protein structure (PDB file), this tool:
 
 The key finding is that binary core identity is a near-minimal sufficient statistic for fold quality, achieving ρ ≈ 0.94 correlation with LDDT when the prediction of core identity is exact. Using the ESM2 prediction, the correlation reaches ρ ≈ 0.82.
 
+## Quick Start (Google Colab)
+
+No installation required — click the badge above to run in your browser. Upload a PDB and hit "Run All".
+
 ## Installation
 
 Requires Python ≥ 3.9. Install dependencies with conda:
