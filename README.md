@@ -75,3 +75,7 @@ ESM2 (650M parameter model, layer 33) provides per-residue embeddings that are p
 ## Citation
 
 If you use this tool, please cite:
+
+## License
+
+MIT License
