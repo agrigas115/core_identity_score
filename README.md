@@ -35,6 +35,9 @@ Options:
 
 Output is written to `<input>_core_identity_score.txt`.
 
+An example decoy from CASP is included: T0762TS008_1_H.pdb
+With ESM2 previously downloaded, this example runs in 8 seconds.
+
 ## Output format
 
 ```
