@@ -1,3 +1,4 @@
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/agrigas115/core_identity_score/blob/main/core_identity_score.ipynb)
 # Core Identity Score
 
 Predict protein fold quality from sequence alone using binary core/surface identity.
