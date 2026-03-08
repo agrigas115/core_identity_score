@@ -233,7 +233,7 @@ def compute_reference_sasa(topology, positions, sigma):
 def compute_rsasa(topology, positions, sigma):
     """
     Compute rSASA for each residue: SASA_in_context / SASA_as_dipeptide.
-    Returns dict: res_index -> (res_name, rSASA).
+    Returns dict: res_index -> (res_name, res_id, rSASA).
     """
     context_sasa = compute_sasa(topology, positions, sigma)
     reference_sasa = compute_reference_sasa(topology, positions, sigma)
@@ -244,11 +244,12 @@ def compute_rsasa(topology, positions, sigma):
         ref = reference_sasa.get(ri, 0.0)
         ctx = context_sasa.get(ri, 0.0)
         if ref > 0:
-            rsasa[ri] = (res.name, ctx / ref)
+            rsasa[ri] = (res.name, res.id, ctx / ref)
         else:
-            rsasa[ri] = (res.name, 0.0)
+            rsasa[ri] = (res.name, res.id, 0.0)
 
     return rsasa
+
 
 
 # ---------------------------------------------------------------
@@ -257,25 +258,24 @@ def compute_rsasa(topology, positions, sigma):
 
 def extract_sequence_and_labels(rsasa, threshold=0.1):
     """
-    From the rsasa dict {res_index: (res_name, rSASA)},
-    extract the one-letter sequence, rSASA values, and binary core labels.
-    Returns (sequence, rsasa_values, core_labels) where:
-        sequence: str of one-letter codes
-        rsasa_values: list of floats
-        core_labels: list of ints (1 = core, 0 = surface)
+    From the rsasa dict {res_index: (res_name, res_id, rSASA)},
+    extract the one-letter sequence, rSASA values, binary core labels,
+    and PDB residue IDs.
     """
     sequence = []
     rsasa_values = []
     core_labels = []
+    res_ids = []
 
     for i in sorted(rsasa.keys()):
-        name, val = rsasa[i]
+        name, res_id, val = rsasa[i]
         one = THREE_TO_ONE.get(name, 'X')
         sequence.append(one)
         rsasa_values.append(val)
         core_labels.append(1 if val < threshold else 0)
+        res_ids.append(res_id)
 
-    return ''.join(sequence), rsasa_values, core_labels
+    return ''.join(sequence), rsasa_values, core_labels, res_ids
 
 
 # ---------------------------------------------------------------
@@ -367,11 +367,10 @@ def predict_core(embeddings, model_path, device=None):
 
     return pred_labels, pred_scores
 
-def write_output(filepath, sequence, rsasa_values, core_labels, pred_labels, mcc_score, lddt_pred):
+
+def write_output(filepath, sequence, rsasa_values, core_labels, pred_labels, mcc_score, lddt_pred, res_ids):
     """
     Write column-format output comparing true and predicted core labels.
-
-    C = core (rSASA < 0.1), S = surface, = = agree, X = disagree
     """
     L = len(sequence)
     label_char = lambda v: "C" if v == 1 else "S"
@@ -396,7 +395,7 @@ def write_output(filepath, sequence, rsasa_values, core_labels, pred_labels, mcc
         t = label_char(core_labels[i])
         p = label_char(pred_labels[i])
         m = "=" if core_labels[i] == pred_labels[i] else "X"
-        lines.append(f"{i+1:<6}{sequence[i]:<4}{rsasa_values[i]:<8.4f}{t:<6}{p:<6}{m:<6}")
+        lines.append(f"{res_ids[i]:<6}{sequence[i]:<4}{rsasa_values[i]:<8.4f}{t:<6}{p:<6}{m:<6}")
 
     text = "\n".join(lines)
 
@@ -423,7 +422,7 @@ if __name__ == "__main__":
     ### Calculate rSASA ###
     print('Measuring rSASA...')
     rsasa = compute_rsasa(topology, positions, sigma)
-    sequence, rsasa_values, core_labels = extract_sequence_and_labels(rsasa)
+    sequence, rsasa_values, core_labels, res_ids = extract_sequence_and_labels(rsasa)
     
     ## Embed sequence into ESM2 ###
     print('Getting ESM2 embeddings...')
@@ -443,4 +442,5 @@ if __name__ == "__main__":
     
     print('Predicted LDDT: '+str(round(lddt_pred,3)))
     
-    write_output(output_file, sequence, rsasa_values, core_labels, pred_labels, mcc_score, lddt_pred)
+    write_output(output_file, sequence, rsasa_values, core_labels, pred_labels, mcc_score, lddt_pred, res_ids)
+    
