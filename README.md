@@ -8,7 +8,7 @@ Given a protein structure (PDB file), this tool:
 2. Computes per-residue relative solvent accessible surface area (rSASA) using FreeSASA
 3. Assigns binary core (rSASA < 0.1) and surface labels
 4. Extracts per-residue ESM2 embeddings from the sequence
-5. Predicts core/surface labels using a trained classification head
+5. Predicts core/surface labels using a trained classification head from the ESM2 embeddings
 6. Compares predicted and true labels via MCC and reports an estimated LDDT
 
 The key finding is that binary core identity is a near-minimal sufficient statistic for fold quality, achieving ρ ≈ 0.94 correlation with LDDT when the prediction of core identity is exact. Using the ESM2 prediction, the correlation reaches ρ ≈ 0.82.
