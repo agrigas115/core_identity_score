@@ -43,6 +43,14 @@ Output is written to `<input>_core_identity_score.txt`.
 An example decoy from CASP is included: T0762TS008_1_H.pdb
 With ESM2 previously downloaded, this example runs in 8 seconds.
 
+If you would like to run a batch of an entire directory of decoys 
+at the same time, we also include a batch version.
+
+```
+python main_batch.py /path/to/pdb_directory/
+```
+If not specified, output is written to the input directory. A summary CSV is also generated.
+
 ## Output format
 
 ```
