@@ -83,6 +83,7 @@ ESM2 (650M parameter model, layer 33) provides per-residue embeddings that are p
 ## Citation
 
 If you use this tool, please cite:
+Note: In the original manuscript, Reduce was used to add hydrogens. To make the project easier to deploy, here we use PDBFixer to add hydrogens. However, we have confirmed that the results are nearly identical.
 
 ## License
 
