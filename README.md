@@ -43,7 +43,7 @@ Output is written to `<input>_core_identity_score.txt`.
 An example decoy from CASP is included: T0762TS008_1_H.pdb
 With ESM2 previously downloaded, this example runs in 8 seconds.
 
-If you would like to run a batch of an entire directory of decoys 
+If you would like to run an entire directory of decoys 
 at the same time, we also include a batch version.
 
 ```
