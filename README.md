@@ -1,7 +1,7 @@
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/agrigas115/core_identity_score/blob/main/core_identity_score.ipynb)
 # Core Identity Score
 
-Predict protein fold quality from sequence alone using binary core/surface identity.
+Predict protein fold quality from sequence alone using binary core/surface identity. For more details, see our preprint: https://www.biorxiv.org/content/10.64898/2026.03.28.714986v1 
 
 Given a protein structure (PDB file), this tool:
 1. Adds hydrogens using PDBFixer
@@ -82,7 +82,7 @@ ESM2 (650M parameter model, layer 33) provides per-residue embeddings that are p
 
 ## Citation
 
-If you use this tool, please cite:
+If you use this tool, please cite: https://www.biorxiv.org/content/10.64898/2026.03.28.714986v1
 Note: In the original manuscript, Reduce was used to add hydrogens. To make the project easier to deploy, here we use PDBFixer to add hydrogens. However, we have confirmed that the results are nearly identical.
 
 ## License
