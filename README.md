@@ -11,7 +11,7 @@ Given a protein structure (PDB file), this tool:
 5. Predicts core/surface labels using a trained classification head from the ESM2 embeddings
 6. Compares predicted and true labels via MCC and reports an estimated LDDT
 
-The key finding is that binary core identity is a near-minimal sufficient statistic for fold quality, achieving ρ ≈ 0.94 correlation with LDDT when the prediction of core identity is exact. Using the ESM2 prediction, the correlation reaches ρ ≈ 0.83. The residues that are the most difficult to predict are the hydrophobic resdidues.
+The key finding is that binary core identity is a near-minimal sufficient statistic for fold quality, achieving ρ ≈ 0.94 correlation with LDDT when the prediction of core identity is exact. Using the ESM2 prediction, the correlation reaches ρ ≈ 0.83. The residues that are the most difficult to predict are the hydrophobic residues.
 
 ## Quick Start (Google Colab)
 
